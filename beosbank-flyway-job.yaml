@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: beosbank-dbupdater-job
+spec:
+  template:
+    metadata:
+      name: beosbank-dbupdater
+    spec:
+      containers:
+        - name: db-updater
+          image: jbossdevguidebook/flyway:v1.0.4-rhdblog
+          volumeMounts:
+            - name: sql-configmap-volume
+              mountPath: /var/flyway/data/
+          env:
+          - name: DB_USER
+            value: root
+          - name: DB_PASSWORD
+            value: Europa01#
+          - name: DB_URL
+            value: "jdbc:postgresql://beosbank-posgres-db-europa/beosbank-europa"
+      restartPolicy: Never
+
+      volumes:
+      - name: sql-configmap-volume
+        configMap:
+          name: sql-configmap
