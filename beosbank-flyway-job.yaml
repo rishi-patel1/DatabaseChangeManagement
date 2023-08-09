@@ -9,20 +9,20 @@ spec:
     spec:
       containers:
         - name: db-updater
-          image: jbossdevguidebook/flyway:v1.0.4-rhdblog
+          image: icr.io/sgr-hackathon/flyway-migration@sha256:31668a23dd287bc84f0c188c824766287bd69fd04c7fff08fef234fc3fdc6147
           volumeMounts:
             - name: sql-configmap-volume
               mountPath: /var/flyway/data/
           env:
           - name: DB_USER
-            value: root
+            value: myhadmdq
           - name: DB_PASSWORD
-            value: Europa01#
+            value: YOUR_PASSWORD
           - name: DB_URL
-            value: "jdbc:postgresql://beosbank-posgres-db-europa/beosbank-europa"
+            value: "jdbc:postgresql://john.db.elephantsql.com/myhadmdq"
       restartPolicy: Never
 
       volumes:
       - name: sql-configmap-volume
         configMap:
-          name: sql-configmap
+          name: sql-cm

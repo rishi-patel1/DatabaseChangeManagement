@@ -1,5 +1,4 @@
 FROM alpine 
-MAINTAINER "Nono Elvadas" 
 
 
 ENV FLYWAY_VERSION=4.2.0
@@ -23,9 +22,13 @@ RUN apk add --update \
 RUN wget --no-check-certificate  $FLYWAY_PKGS &&\
    mkdir -p $FLYWAY_HOME && \
    mkdir -p /var/flyway/data  && \
-   tar -xzf flyway-commandline-$FLYWAY_VERSION.tar.gz -C $FLYWAY_HOME  --strip-components=1
+   ls -a /var/flyway && \
+   tar -xzf flyway-commandline-$FLYWAY_VERSION.tar.gz -C $FLYWAY_HOME  --strip-components=1 
 
+COPY ./sql/*.sql  $FLYWAY_HOME/sql/
+RUN ls -a $FLYWAY_HOME/sql
 VOLUME /var/flyway/data
 
 ENTRYPOINT  cp -f /var/flyway/data/*.sql  $FLYWAY_HOME/sql/ && \
-            $FLYWAY_HOME/flyway  baseline migrate info  -user=${DB_USER} -password=${DB_PASSWORD} -url=${DB_URL}
+            ls -a /var/flyway/data && \
+            $FLYWAY_HOME/flyway  baseline migrate info  -user=${DB_USER} -password=${DB_PASSWORD} -url=${DB_URL} 
