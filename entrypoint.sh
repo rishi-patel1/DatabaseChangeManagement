@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Clone the repository from github.ibm.com
-git clone https://github.ibm.com/Patel-Rishi/DatabaseChangeManagement.git
+git clone https://github.com/rishi-patel1/DatabaseChangeManagement.git
 
 # Copy SQL files from cloned repository
 cp /DatabaseChangeManagement/sql/*.sql $FLYWAY_HOME/sql/

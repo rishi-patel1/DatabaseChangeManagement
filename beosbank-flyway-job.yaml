@@ -9,7 +9,7 @@ spec:
     spec:
       containers:
         - name: db-updater
-          image: icr.io/sgr-hackathon/flyway-migration@sha256:3a21a19d7f14c82849a0cb1fec997191e18409b78c7dad4afd26f3ea96a713f7
+          image: icr.io/sgr-hackathon/flyway-migration@sha256:0f68053126f2bf4f702c8dca81fa05d2228b9959ee4eaead2fcb2a54e425ccfb
           volumeMounts:
             - name: sql-configmap-volume
               mountPath: /var/flyway/data/
