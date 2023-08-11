@@ -16,19 +16,25 @@ LABEL com.redhat.component="flyway" \
 RUN apk add --update \
        openjdk8-jre \
         wget \
+        git \
         bash
-
+         
+ARG GIT_USERNAME
+ARG GIT_TOKEN
 #Download and flyway
 RUN wget --no-check-certificate  $FLYWAY_PKGS &&\
    mkdir -p $FLYWAY_HOME && \
    mkdir -p /var/flyway/data  && \
    ls -a /var/flyway && \
-   tar -xzf flyway-commandline-$FLYWAY_VERSION.tar.gz -C $FLYWAY_HOME  --strip-components=1 
-
-COPY ./sql/*.sql  $FLYWAY_HOME/sql/
+   tar -xzf flyway-commandline-$FLYWAY_VERSION.tar.gz -C $FLYWAY_HOME  --strip-components=1 && \
+   apk add --no-cache git && \
+   git config --global credential.helper '!f() { sleep 1; echo "username=${GIT_USERNAME}"; echo "password=${GIT_TOKEN}"; }; f'
+# COPY ./sql/*.sql  $FLYWAY_HOME/sql/
 RUN ls -a $FLYWAY_HOME/sql
+
+COPY entrypoint.sh /entrypoint.sh 
+RUN chmod +x /entrypoint.sh
 VOLUME /var/flyway/data
 
-ENTRYPOINT  cp -f /var/flyway/data/*.sql  $FLYWAY_HOME/sql/ && \
-            ls -a /var/flyway/data && \
-            $FLYWAY_HOME/flyway  baseline migrate info  -user=${DB_USER} -password=${DB_PASSWORD} -url=${DB_URL} 
+
+ENTRYPOINT  ["/entrypoint.sh"]

@@ -9,7 +9,7 @@ spec:
     spec:
       containers:
         - name: db-updater
-          image: icr.io/sgr-hackathon/flyway-migration@sha256:31668a23dd287bc84f0c188c824766287bd69fd04c7fff08fef234fc3fdc6147
+          image: icr.io/sgr-hackathon/flyway-migration@sha256:3a21a19d7f14c82849a0cb1fec997191e18409b78c7dad4afd26f3ea96a713f7
           volumeMounts:
             - name: sql-configmap-volume
               mountPath: /var/flyway/data/
@@ -17,7 +17,7 @@ spec:
           - name: DB_USER
             value: myhadmdq
           - name: DB_PASSWORD
-            value: YOUR_PASSWORD
+            value: EO6-iHzoVwXUkBYfFlsuAYi3O5kx41X9
           - name: DB_URL
             value: "jdbc:postgresql://john.db.elephantsql.com/myhadmdq"
       restartPolicy: Never
