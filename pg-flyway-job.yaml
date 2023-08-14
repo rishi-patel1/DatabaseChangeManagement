@@ -1,11 +1,11 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: beosbank-dbupdater-job
+  name: flyway-dbupdater-job
 spec:
   template:
     metadata:
-      name: beosbank-dbupdater
+      name: dbupdater
     spec:
       containers:
         - name: db-updater
