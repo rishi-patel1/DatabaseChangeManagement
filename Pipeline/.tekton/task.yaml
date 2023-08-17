@@ -28,7 +28,7 @@ spec:
       args:
         - |
           set -e -o pipefail
-          url="https://$GIT_TOKEN@github.ibm.com/Rishi-Patel/Tekton-Task-Template.git"
+          url="https://$GIT_TOKEN@github.ibm.com/Patel-Rishi/Tekton-Task-Template.git"
           echo "Cloning REPOSITORY"
           git clone -q $url .
           cd scripts
