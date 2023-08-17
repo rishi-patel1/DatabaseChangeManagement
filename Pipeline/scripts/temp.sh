@@ -1,5 +1,4 @@
 echo "Hello World"
-echo "anusha"
 ibm_cloud_login() {
               echo "INFO : Login to IBM Cloud account ... "
               ibmcloud config --check-version false
