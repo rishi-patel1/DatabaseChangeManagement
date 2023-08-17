@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-app
+spec:
+  progressDeadlineSeconds: 900
+  replicas: 2
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: python-app
+  strategy:
+    rollingUpdate:
+      maxSurge: 100%
+      maxUnavailable: 50%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: python-app
+    spec:
+      containers:
+      - name: python-app
+        image: icr.io/sgr-hackathon/flask-application@sha256:9052ca33e328f36cfa4330ae8af0e35bb73e2279281e21a7daf6876ef3380054
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5000
+          protocol: TCP
+        resources:
+          limits:
+            cpu: "1"
+            memory: 1000Mi
+          requests:
+            cpu: 100m
+            memory: 32Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: py-service
+spec:
+  selector:
+    app: python-app
+  ports:
+    - nodePort: 32446
+      port: 80
+      protocol: TCP
+      targetPort: 5000
+  type: NodePort
+
+
+
+

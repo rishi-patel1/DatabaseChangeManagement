@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Employee Management</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Employee Management</h1>
+      <form action="/" method="POST">
+        <input type="text" name="name" placeholder="Employee Name" required />
+        <input type="number" name="salary" placeholder="Salary" required />
+        <button type="submit">Add Employee</button>
+      </form>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Salary</th>
+            <th>Department</th>
+            <th>Update Salary</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for employee in employees %}
+          <tr>
+            <td>{{ employee[1] }}</td>
+            <td>${{ employee[2] }}</td>
+            <td>{{ employee[3] }}</td>
+            <td>
+              <form action="/update/{{ employee[0] }}" method="POST">
+                <input
+                  type="number"
+                  name="new_salary"
+                  placeholder="New Salary"
+                  required
+                />
+                <button type="submit">Update</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
