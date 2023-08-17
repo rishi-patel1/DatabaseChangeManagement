@@ -31,6 +31,6 @@ spec:
           url="https://$GIT_TOKEN@github.com/rishi-patel1/DatabaseChangeManagement.git"
           echo "Cloning REPOSITORY"
           git clone -q $url .
-          cd scripts
+          cd Pipeline/scripts
           chmod +x temp.sh
           ./temp.sh
