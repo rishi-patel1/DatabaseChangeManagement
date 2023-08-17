@@ -1,0 +1,16 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: pipeline
+spec:
+  params:
+    - name: pipeline-pvc
+      description: the pipeline pvc name
+  tasks:
+    - name: template-task
+      # retries: 1
+      taskRef:
+        name: template-task
+      params:
+        - name: task-pvc
+          value: $(params.pipeline-pvc)

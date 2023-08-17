@@ -1,0 +1,36 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: template-task
+spec:
+  params:
+    - name: task-pvc
+      description: the task pvc - this is the volume where the files (Dockerfile etc..) are expected to be
+    - name: continuous-delivery-context-secret
+      description: name of the configmap containing the continuous delivery pipeline context secrets
+      default: cd-secret
+  steps:
+    - name: template-task-step
+      image: icr.io/continuous-delivery/pipeline/pipeline-base-image:2.23
+      workingDir: /artifacts
+      env:
+        - name: GIT_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: $(params.continuous-delivery-context-secret)
+              key: GIT_TOKEN
+        - name: SLACK_URL
+          valueFrom:
+            secretKeyRef:
+              name: $(params.continuous-delivery-context-secret)
+              key: SLACK_URL
+      command: ["/bin/bash", "-c"]
+      args:
+        - |
+          set -e -o pipefail
+          url="https://$GIT_TOKEN@github.ibm.com/Rishi-Patel/Tekton-Task-Template.git"
+          echo "Cloning REPOSITORY"
+          git clone -q $url .
+          cd scripts
+          chmod +x temp.sh
+          ./temp.sh
