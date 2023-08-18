@@ -26,6 +26,9 @@ else
 fi       
 kubectl apply -f pg-flyway-job.yaml;
 get_job_status
-kubectl logs `kubectl get pods | grep '\bflyway\b' |  awk '{print $1}'` > flyway_output.txt
+isOutputFilePresent=$(ls | grep flyway_output.txt)
+if [[ -z $isOutputFilePresent ]];then
+    kubectl logs `kubectl get pods | grep '\bflyway\b' |  awk '{print $1}'` > flyway_output.txt
+fi
 send_slack_alert
 

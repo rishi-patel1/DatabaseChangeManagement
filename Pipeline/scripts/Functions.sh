@@ -11,12 +11,18 @@ get_job_status(){
     while [[ $jobStatus == "Running" || $jobStatus == "Pending" || $jobStatus == "ContainerCreating" ]];
     do 
         sleep 10;
-
         jobStatus=$(kubectl get pods | grep '\bflyway\b' |  awk '{print $3}');
+        isError=$(echo $jobStatus | grep '\bflyway\b' |  awk '{print $3}' | grep Error)
         echo jobStatus is $jobStatus
+        if [[ -z $isError ]];
+        then 
+            echo INFO: No Errors
+        else
+            echo THERE WERE ERRORS IN MIGRATION SQL FILES > flyway_output.txt
+            break
+        fi
         if [[ $jobStatus == "Completed" ]];
         then 
-            echo inside if $jobStatus
             break
         fi
     done
