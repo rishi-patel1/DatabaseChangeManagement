@@ -12,7 +12,7 @@ get_job_status(){
     while [[ $jobStatus == "Running" || $jobStatus == "Pending" || $jobStatus == "ContainerCreating" ]];
     do 
         sleep 10;
-        $((count++))
+        ((count++))
         jobStatus=$(kubectl get pods | grep '\bflyway\b' |  awk '{print $3}');
         isError=$(echo $jobStatus | grep '\bflyway\b' |  awk '{print $3}' | grep Error)
         # echo jobStatus is $jobStatus
