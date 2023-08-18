@@ -8,15 +8,17 @@ ibm_cloud_login() {
 get_job_status(){
     jobStatus=$(kubectl get pods | grep '\bflyway\b' |  awk '{print $3}')
     echo jobStatus is $jobStatus
+    count=0
     while [[ $jobStatus == "Running" || $jobStatus == "Pending" || $jobStatus == "ContainerCreating" ]];
     do 
         sleep 10;
+        $((count++))
         jobStatus=$(kubectl get pods | grep '\bflyway\b' |  awk '{print $3}');
         isError=$(echo $jobStatus | grep '\bflyway\b' |  awk '{print $3}' | grep Error)
-        echo jobStatus is $jobStatus
+        # echo jobStatus is $jobStatus
         if [[ -z $isError ]];
         then 
-            echo INFO: No Errors
+            echo INFO: No Errors, Job is $jobStatus after $(($count * 10)) seconds
         else
             SLACK_ERROR="THERE WERE ERRORS IN MIGRATION SQL FILES"
             break
