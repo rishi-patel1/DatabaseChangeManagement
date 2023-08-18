@@ -6,6 +6,8 @@ spec:
   params:
     - name: gitToken
       description: git token
+    - name: dbPassword
+      description: password to connect to db
     - name: slackUrl
       description: slack token
     - name: apiKey
@@ -23,6 +25,7 @@ spec:
         GIT_TOKEN: $(params.gitToken)
         SLACK_URL: $(params.slackUrl)
         API_KEY: $(params.apiKey)
+        DB_PASS: $(params.dbPassword)
     - apiVersion: v1
       kind: PersistentVolumeClaim
       metadata:

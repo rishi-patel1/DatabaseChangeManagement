@@ -12,6 +12,8 @@ ibm_cloud_login() {
           }
 ibm_cloud_login
 # kubectl get pods
-cd ..
-ls
+cd ../../pg-flyway-db-migration
 echo INFO: inside flyway folder; ls;
+envsubst < pg-flyway-job.yaml > pg-flyway-job.yaml
+cat pg-flyway-job.yaml
+kc delete -f pg-flyway-job.yaml       

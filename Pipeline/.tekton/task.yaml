@@ -33,6 +33,11 @@ spec:
             secretKeyRef:
               name: $(params.continuous-delivery-context-secret)
               key: API_KEY
+        - name: DB_PASS
+          valueFrom:
+            secretKeyRef:
+              name: $(params.continuous-delivery-context-secret)
+              key: DB_PASS
       command: ["/bin/bash", "-c"]
       args:
         - |
