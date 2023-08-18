@@ -9,7 +9,7 @@ spec:
     - name: clusterId
       description: id of cluster
   tasks:
-    - name: template-task
+    - name: migration-task
       # retries: 1
       taskRef:
         name: migration-task
