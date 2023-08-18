@@ -1,4 +1,5 @@
 draft/*
 .env
 localtest.sh
+flyway_output.txt
 .gitignore

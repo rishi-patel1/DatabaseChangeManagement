@@ -1,28 +1,22 @@
-echo "Hello World"
-ibm_cloud_login() {
-              echo "INFO : Login to IBM Cloud account ... "
-              ibmcloud config --check-version false
-              ibmcloud login -a https://cloud.ibm.com --apikey rf7_LUzhtxwznAjGK-9ZK6SHuFMaTAHi3uwgVyWJCjDB --no-region; login_status=$?;
-              ibmcloud ks cluster config -c $CLUSTER_ID > /artifacts/config_tmp.txt; rm -rf /artifacts/config_tmp.txt
-          }
-
-get_job_status(){
-    jobStatus=$(kubectl get pods | grep '\bflyway\b' |  awk '{print $3}')
-    echo jobStatus is $jobStatus
-    while [[ $jobStatus -eq "Running" || $jobStatus -eq "Pending" || $jobStatus -eq "ContainerCreating" ]];
-    do 
-        sleep 10;
-        jobStatus=$(kubectl get pods | grep '\bflyway\b' |  awk '{print $3}');
-        echo jobStatus is $jobStatus
-        if [[ $jobStatus -eq "Completed" ]];
-        then 
-            break
-        fi
-    done
-}
+source ./Functions.sh
+echo "-----------------------------------------------------------------------------"
+    # Checking its trigger by timer, scm or manual, w.r.t inventory decide to use
+    if [[ "$TRIGGER_TYPE" == "generic" ]]; then
+        echo "INFO : This is Trigger by generic SCM (github/gitlab webhook) ..."; TRIGGERED_BY="Generic"
+        echo "INFO : TRIGGER_TYPE=$TRIGGER_TYPE and PIPELINE_RUN_URL=$PIPELINE_RUN_URL and TRIGGERED_BY=$TRIGGERED_BY"
+    elif [[ "$TRIGGER_TYPE" == "timer" ]]; then
+        echo "INFO :: This is Trigger by timer ..."; TRIGGERED_BY="Timer"
+        echo "INFO :: TRIGGER_TYPE=$TRIGGER_TYPE and PIPELINE_RUN_URL= $PIPELINE_RUN_URL and TRIGGERED_BY= $TRIGGERED_BY"
+    else
+        TRIGGERED_BY=$(echo $TRIGGERED_BY | tr "[:upper:]" "[:lower:]")
+        echo "INFO : TRIGGER_TYPE=$TRIGGER_TYPE and TRIGGERED_BY=$TRIGGERED_BY"
+    fi
+echo "-----------------------------------------------------------------------------"
 ibm_cloud_login
-# kubectl get pods
+
 cd ../../pg-flyway-db-migration
+# FOR LOCAL TEST UNCOMMENT THIS LINE AND COMMENT ABOVE LINE
+# cd pg-flyway-db-migration
 echo INFO: inside flyway folder; ls;
 export DB_PASS=$DB_PASS
 # cat pg-flyway-job.yaml
@@ -30,8 +24,12 @@ isFlywayJobPresent=$(kubectl get pods | grep flyway)
 if [[ -z $isFlywayJobPresent ]];then
     echo job not present
 else
-    kubectl delete -f pg-flyway-job.yaml; sleep 30;
+    kubectl delete -f pg-flyway-job.yaml; 
 fi       
-kubectl apply -f pg-flyway-job.yaml; sleep 10;
+kubectl apply -f pg-flyway-job.yaml;
 get_job_status
 kubectl logs `kubectl get pods | grep '\bflyway\b' |  awk '{print $1}'` > flyway_output.txt
+
+ls
+send_slack_alert
+
