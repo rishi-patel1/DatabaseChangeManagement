@@ -10,3 +10,5 @@ ibm_cloud_login() {
               done
               ibmcloud ks cluster config -c $CLUSTER_ID > /artifacts/config_tmp.txt; rm -rf /artifacts/config_tmp.txt
           }
+
+ibm_cloud_login
