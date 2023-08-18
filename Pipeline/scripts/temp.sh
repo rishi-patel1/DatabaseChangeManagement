@@ -14,3 +14,4 @@ cat pg-flyway-job.yaml
 envsubst < pg-flyway-job.yaml > pg-flyway-job.yaml
 cat pg-flyway-job.yaml
 kubectl delete -f pg-flyway-job.yaml       
+kubectl apply -f pg-flyway-job.yaml       
