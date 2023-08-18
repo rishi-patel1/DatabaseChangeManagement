@@ -14,3 +14,5 @@ spec:
       params:
         - name: task-pvc
           value: $(params.pipeline-pvc)
+        - name: clusterId
+          value: $(params.clusterId)

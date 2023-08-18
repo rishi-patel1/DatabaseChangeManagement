@@ -9,11 +9,15 @@ spec:
     - name: continuous-delivery-context-secret
       description: name of the configmap containing the continuous delivery pipeline context secrets
       default: cd-secret
+    - name: clusterId
+      description: Id of cluster
   steps:
     - name: template-task-step
       image: icr.io/continuous-delivery/pipeline/pipeline-base-image:2.23
       workingDir: /artifacts
       env:
+        - name: CLUSTER_ID
+          value: $(params.clusterId)
         - name: GIT_TOKEN
           valueFrom:
             secretKeyRef:
@@ -24,6 +28,11 @@ spec:
             secretKeyRef:
               name: $(params.continuous-delivery-context-secret)
               key: SLACK_URL
+        - name: API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: $(params.continuous-delivery-context-secret)
+              key: API_KEY
       command: ["/bin/bash", "-c"]
       args:
         - |

@@ -8,6 +8,10 @@ spec:
       description: git token
     - name: slackUrl
       description: slack token
+    - name: apiKey
+      description: ibmcloud api key
+    - name: clusterId
+      description: cluster id
   resourcetemplates:
     # CD secret to provide API_KEY to access toolchain information
     - apiVersion: v1
@@ -18,6 +22,7 @@ spec:
       stringData:
         GIT_TOKEN: $(params.gitToken)
         SLACK_URL: $(params.slackUrl)
+        API_KEY: $(params.apiKey)
     - apiVersion: v1
       kind: PersistentVolumeClaim
       metadata:
@@ -39,6 +44,8 @@ spec:
         params:
           - name: pipeline-pvc
             value: pipelinerun-$(uid)-pvc
+          - name: clusterId
+            value: $(params.clusterId)
 
 ---
 apiVersion: tekton.dev/v1beta1
