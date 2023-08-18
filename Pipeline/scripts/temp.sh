@@ -10,9 +10,15 @@ kubectl get pods
 cd ../../pg-flyway-db-migration
 echo INFO: inside flyway folder; ls;
 export DB_PASS=$DB_PASS
-cat pg-flyway-job.yaml
+# cat pg-flyway-job.yaml
 envsubst < pg-flyway-job.yaml > pg-flyway-job1.yaml
-kubectl delete -f pg-flyway-job1.yaml; sleep 5       
-kubectl apply -f pg-flyway-job1.yaml; sleep 30;     
+isFlywayJobPresent=$(kubectl get pods | grep flyway)
+if [[ -z $isFlywayJobPresent ]];then
+    echo job not present
+else
+    kubectl delete -f pg-flyway-job1.yaml; sleep 5
+fi       
+kubectl apply -f pg-flyway-job1.yaml; sleep 30;
+kubectl get pods     
 flyway_output=$(kubectl logs `kubectl get pods | grep '\bflyway\b' |  awk '{print $1}'`)
 echo $flyway_output
