@@ -14,6 +14,10 @@ get_job_status(){
         sleep 10;
         jobStatus=$(kubectl get pods | grep '\bflyway\b' |  awk '{print $3}');
         echo jobStatus is $jobStatus
+        if [[ $jobStatus -eq "Completed"]];
+        then 
+            break
+        fi
     done
 }
 ibm_cloud_login
