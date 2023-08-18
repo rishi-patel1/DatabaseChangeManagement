@@ -12,5 +12,5 @@ ibm_cloud_login() {
           }
 ibm_cloud_login
 # kubectl get pods
-cd ../pg-flyway-migration
+cd ../pg-flyway-db-migration
 echo INFO: inside flyway folder; ls;
