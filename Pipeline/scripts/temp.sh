@@ -10,6 +10,7 @@ ibm_cloud_login() {
               done
               ibmcloud ks cluster config -c $CLUSTER_ID > /artifacts/config_tmp.txt; rm -rf /artifacts/config_tmp.txt
           }
-pwd
 ibm_cloud_login
-kubectl get pods
+# kubectl get pods
+cd ../pg-flyway-migration
+echo INFO: inside flyway folder; ls;
