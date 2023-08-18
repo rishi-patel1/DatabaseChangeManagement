@@ -12,3 +12,4 @@ ibm_cloud_login() {
           }
 
 ibm_cloud_login
+kubectl get pods
