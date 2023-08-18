@@ -6,7 +6,7 @@ ibm_cloud_login() {
                 ibmcloud login -a https://cloud.ibm.com --apikey rf7_LUzhtxwznAjGK-9ZK6SHuFMaTAHi3uwgVyWJCjDB --no-region; login_status=$?;
               }
               for login_retry in {1..3}; do
-                  if [[ -z $(echo $login_status | grep "OK" )]] then
+                  if [[ -z $(echo $login_status | grep "OK" )]]; then
                     echo "INFO : trying to line $login_retry times in ibm account..."; ibm_cloud_login_retry
                   else 
                     echo LOGIN SUCCEEDED. INFO: $login_status
