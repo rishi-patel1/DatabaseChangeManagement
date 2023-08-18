@@ -6,6 +6,8 @@ spec:
   params:
     - name: pipeline-pvc
       description: the pipeline pvc name
+    - name: clusterId
+      description: id of cluster
   tasks:
     - name: template-task
       # retries: 1
