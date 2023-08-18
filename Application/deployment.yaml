@@ -4,7 +4,7 @@ metadata:
   name: python-app
 spec:
   progressDeadlineSeconds: 900
-  replicas: 2
+  replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: python-app
-        image: icr.io/sgr-hackathon/flask-application@sha256:9052ca33e328f36cfa4330ae8af0e35bb73e2279281e21a7daf6876ef3380054
+        image: icr.io/sgr-hackathon/flask-application@sha256:6097d79ec6a4f7f73ee751dff1ce64c1e8eec598ccb042c86f67dbc844862b57
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 5000
