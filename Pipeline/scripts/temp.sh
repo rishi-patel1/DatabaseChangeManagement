@@ -17,9 +17,7 @@ ibm_cloud_login
 cd ../../pg-flyway-db-migration
 # FOR LOCAL TEST UNCOMMENT THIS LINE AND COMMENT ABOVE LINE
 # cd pg-flyway-db-migration
-echo INFO: inside flyway folder; ls;
-export DB_PASS=$DB_PASS
-# cat pg-flyway-job.yaml
+echo INFO: inside flyway folder;
 isFlywayJobPresent=$(kubectl get pods | grep flyway)
 if [[ -z $isFlywayJobPresent ]];then
     echo job not present
@@ -29,7 +27,5 @@ fi
 kubectl apply -f pg-flyway-job.yaml;
 get_job_status
 kubectl logs `kubectl get pods | grep '\bflyway\b' |  awk '{print $1}'` > flyway_output.txt
-
-ls
 send_slack_alert
 

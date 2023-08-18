@@ -31,7 +31,7 @@ send_slack_alert(){
         echo "\$slackTest is empty"
         json="{\"text\": \"No Flyway Migration needed\n<$PIPELINE_RUN_URL| See the Pipeline logs> | Trigger by $TRIGGERED_BY \"}"
     else
-        json='{"text": ":successful: Flyway Migration Job Completed Successfully\n'$slackTest'\n<'$PIPELINE_RUN_URL'| See the Pipeline logs> | Trigger by '$TRIGGERED_BY'"}'
+        json='{"text": ":successful: Flyway Migration Job r an Successfully\n'$slackTest'\n<'$PIPELINE_RUN_URL'| See the Pipeline logs> | Trigger by '$TRIGGERED_BY'"}'
 
     fi
     # echo $json

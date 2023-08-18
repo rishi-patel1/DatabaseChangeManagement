@@ -38,6 +38,18 @@ spec:
             secretKeyRef:
               name: $(params.continuous-delivery-context-secret)
               key: DB_PASS
+        - name: PIPELINE_RUN_URL
+          valueFrom: 
+            fieldRef:
+              fieldPath: metadata.annotations['devops.cloud.ibm.com/pipeline-run-url']
+        - name: TRIGGER_TYPE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.annotations['devops.cloud.ibm.com/trigger-type']
+        - name: TRIGGERED_BY
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.annotations['devops.cloud.ibm.com/triggered-by'] 
       command: ["/bin/bash", "-c"]
       args:
         - |
