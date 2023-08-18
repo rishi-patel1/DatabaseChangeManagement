@@ -11,7 +11,7 @@ cd ../../pg-flyway-db-migration
 echo INFO: inside flyway folder; ls;
 export DB_PASS=$DB_PASS
 cat pg-flyway-job.yaml
-envsubst < pg-flyway-job.yaml > pg-flyway-job.yaml
-cat pg-flyway-job.yaml
+envsubst < pg-flyway-job.yaml > pg-flyway-job1.yaml
+ls
 # kubectl delete -f pg-flyway-job.yaml       
-# kubectl apply -f pg-flyway-job.yaml       
+kubectl apply -f pg-flyway-job1.yaml       
