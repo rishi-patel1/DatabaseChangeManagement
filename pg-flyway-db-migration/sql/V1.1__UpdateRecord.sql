@@ -1,3 +1,3 @@
 UPDATE employee
-SET name = 'James Bond'
-WHERE id = 3;
+SET name = 'Rishi Patel'
+WHERE id = 2;
