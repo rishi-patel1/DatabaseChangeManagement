@@ -1,1 +1,0 @@
-ALTER TABLE employee ADD COLUMN department VARCHAR(50);
